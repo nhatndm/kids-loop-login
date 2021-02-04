@@ -5,5 +5,5 @@ export const BoxStyle = styled.div`
   background-color: ${({ theme }) => theme.colors.elementBackground};
   border-radius: ${({ theme }) => theme.box.borderRadius};
   padding: ${({ theme }) => theme.box.padding};
-  max-width: 400px;
+  width: 100%;
 `;

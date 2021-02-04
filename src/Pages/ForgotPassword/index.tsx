@@ -7,6 +7,8 @@ import { Input } from '../../Components/Input';
 import Button from '../../Components/Button';
 import FormItem from '../../Components/FormItem';
 import Logo from '../../Components/Logo';
+import FooterBox from '../../Components/FooterBox';
+import Container from '../../Components/Container';
 
 import { Form, notification } from 'antd';
 
@@ -94,37 +96,52 @@ const ResetPasswordPage: React.FC = () => {
 
   return (
     <ForgotPasswordPageStyle>
-      <Box customStyle={{ width: 400 }}>
-        <Logo width={60} height={60} />
-        <Label
-          level={4}
-          color="default"
-          customStyle={{ marginTop: 10, marginBottom: 20 }}
-        >
-          Reset Password
-        </Label>
-        <Form form={form} initialValues={{ username: '' }} onFinish={onFinish}>
-          <FormItem
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: 'Username is required',
-              },
-            ]}
+      <Container
+        customStyle={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          maxWidth: 440,
+        }}
+      >
+        <Box>
+          <Logo width={60} height={60} />
+          <Label
+            level={4}
+            color="default"
+            customStyle={{ marginTop: 10, marginBottom: 20 }}
           >
-            <Input placeholder="Email or Phone *" />
-          </FormItem>
-          <ForgotPasswordButtonGroupStyle>
-            <Text color="primary">Remember password?</Text>
-            <FormItem style={{ marginBottom: 0 }}>
-              <Button htmlType="submit">Reset</Button>
+            Reset Password
+          </Label>
+          <Form
+            form={form}
+            initialValues={{ username: '' }}
+            onFinish={onFinish}
+          >
+            <FormItem
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: 'Username is required',
+                },
+              ]}
+            >
+              <Input placeholder="Email or Phone *" />
             </FormItem>
-          </ForgotPasswordButtonGroupStyle>
-        </Form>
+            <ForgotPasswordButtonGroupStyle>
+              <Text color="primary">Remember password?</Text>
+              <FormItem style={{ marginBottom: 0 }}>
+                <Button htmlType="submit">Reset</Button>
+              </FormItem>
+            </ForgotPasswordButtonGroupStyle>
+          </Form>
 
-        <Text color="primary">Create Account</Text>
-      </Box>
+          <Text color="primary">Create Account</Text>
+        </Box>
+
+        <FooterBox />
+      </Container>
     </ForgotPasswordPageStyle>
   );
 };

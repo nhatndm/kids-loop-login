@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 export const ForgotPasswordPageStyle = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-grow: 1;
+  justify-content: space-around;
   align-items: center;
+  flex-direction: column;
 `;
 
 export const ForgotPasswordButtonGroupStyle = styled.div`

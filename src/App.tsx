@@ -15,7 +15,7 @@ import { AppProvider } from './Context';
 import { AppStyle } from './App.style';
 
 // COMPONENT
-import SignIn from './Pages/SignIn';
+import ForgotPassword from './Pages/ForgotPassword';
 import Spin from './Components/Spin';
 
 interface AppState {
@@ -47,7 +47,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={appState.theme}>
         <AppStyle>
           {appState.loading && <Spin />}
-          <SignIn />
+          <ForgotPassword />
         </AppStyle>
       </ThemeProvider>
     </AppProvider>
