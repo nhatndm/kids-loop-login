@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  RouteComponentProps,
+} from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
 
@@ -14,9 +20,16 @@ import { AppProvider } from './Context';
 // APP STYLE
 import { AppStyle } from './App.style';
 
-// COMPONENT
+// PAGES
+import SignIn from './Pages/SignIn';
+import SignUp from './Pages/SignUp';
 import ForgotPassword from './Pages/ForgotPassword';
+
+// COMPONENT
 import Spin from './Components/Spin';
+
+// APP ROUTE
+import { AppRoute } from './Constant';
 
 interface AppState {
   theme: Theme;
@@ -47,7 +60,17 @@ const App: React.FC = () => {
       <ThemeProvider theme={appState.theme}>
         <AppStyle>
           {appState.loading && <Spin />}
-          <ForgotPassword />
+
+          <BrowserRouter>
+            <Switch>
+              <Route exact path={AppRoute.Main} component={SignIn} />
+              <Route path={AppRoute.SignUp} component={SignUp} />
+              <Route
+                path={AppRoute.ForgotPassword}
+                component={ForgotPassword}
+              />
+            </Switch>
+          </BrowserRouter>
         </AppStyle>
       </ThemeProvider>
     </AppProvider>

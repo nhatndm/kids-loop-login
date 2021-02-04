@@ -9,6 +9,7 @@ import FormItem from '../../Components/FormItem';
 import Logo from '../../Components/Logo';
 import FooterBox from '../../Components/FooterBox';
 import Container from '../../Components/Container';
+import Link from '../../Components/Link';
 
 import { Form, notification } from 'antd';
 
@@ -17,6 +18,9 @@ import { SignInButtonGroupStyle, LoginPageStyle } from './SignIn.style';
 
 // APP CONTEXT
 import { AppContext } from '../../Context';
+
+// APP ROUTE
+import { AppRoute } from '../../Constant';
 
 export interface Login {
   username: string;
@@ -33,7 +37,7 @@ const SignInPage: React.FC = () => {
       password: '',
     };
 
-    const errorFieldForForm = [];
+    let errorFieldForForm: { name: string; errors: string[] }[] = [];
 
     if (data.username.trim().length === 0) {
       error.username = 'Username can not be empty';
@@ -70,41 +74,48 @@ const SignInPage: React.FC = () => {
       });
     }
 
-    if (isValidEmail && data.username !== 'admin@test.com') {
-      error.username = 'We can not find this email';
-
-      errorFieldForForm.push({
-        name: 'username',
-        errors: [`${error.username}`],
-      });
-    }
-
-    if (isValidPhone && data.username !== '132-465-7890') {
-      error.username = 'We can not find this phone';
-
-      errorFieldForForm.push({
-        name: 'username',
-        errors: [`${error.username}`],
-      });
-    }
-
-    if (data.password !== '123456789') {
-      error.password = 'Password is not combined with username';
-
-      errorFieldForForm.push({
-        name: 'password',
-        errors: [`${error.password}`],
-      });
-    }
-
     if (errorFieldForForm.length > 0) {
       return form.setFields(errorFieldForForm);
     }
+
+    errorFieldForForm = [];
 
     appContext?.setLoading(true);
 
     setTimeout(() => {
       appContext?.setLoading(false);
+
+      if (isValidEmail && data.username !== 'admin@test.com') {
+        error.username = 'We can not find this email';
+
+        errorFieldForForm.push({
+          name: 'username',
+          errors: [`${error.username}`],
+        });
+      }
+
+      if (isValidPhone && data.username !== '132-465-7890') {
+        error.username = 'We can not find this phone';
+
+        errorFieldForForm.push({
+          name: 'username',
+          errors: [`${error.username}`],
+        });
+      }
+
+      if (error.username.length === 0 && data.password !== '123456789') {
+        error.password = 'Password is not combined with this username!';
+
+        errorFieldForForm.push({
+          name: 'password',
+          errors: [`${error.password}`],
+        });
+      }
+
+      if (errorFieldForForm.length > 0) {
+        return form.setFields(errorFieldForForm);
+      }
+
       notification.success({
         message: 'Login successfully',
       });
@@ -158,14 +169,19 @@ const SignInPage: React.FC = () => {
               <InputPassword placeholder="Password *" />
             </FormItem>
             <SignInButtonGroupStyle>
-              <Text color="primary">Forgot password?</Text>
+              <Link to={AppRoute.ForgotPassword}>
+                <Text color="primary">Forgot password?</Text>
+              </Link>
+
               <FormItem style={{ marginBottom: 0 }}>
                 <Button htmlType="submit">Sign In</Button>
               </FormItem>
             </SignInButtonGroupStyle>
           </Form>
 
-          <Text color="primary">Create Account</Text>
+          <Link to={AppRoute.SignUp}>
+            <Text color="primary">Create Account</Text>
+          </Link>
         </Box>
 
         <FooterBox />

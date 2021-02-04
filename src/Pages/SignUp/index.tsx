@@ -9,6 +9,7 @@ import FormItem from '../../Components/FormItem';
 import Logo from '../../Components/Logo';
 import FooterBox from '../../Components/FooterBox';
 import Container from '../../Components/Container';
+import Link from '../../Components/Link';
 
 import { Form, notification } from 'antd';
 
@@ -17,6 +18,9 @@ import { SignUpButtonGroupStyle, SignUpPageStyle } from './SignUp.style';
 
 // APP CONTEXT
 import { AppContext } from '../../Context';
+
+// APP ROUTE
+import { AppRoute } from '../../Constant';
 
 export interface Login {
   username: string;
@@ -133,7 +137,9 @@ const SignUpPage: React.FC = () => {
               <InputPassword placeholder="Password *" />
             </FormItem>
             <SignUpButtonGroupStyle>
-              <Text color="primary">You would like to sign in?</Text>
+              <Link to={AppRoute.Main}>
+                <Text color="primary">You would like to sign in?</Text>
+              </Link>
               <FormItem style={{ marginBottom: 0 }}>
                 <Button htmlType="submit">Sign Up</Button>
               </FormItem>

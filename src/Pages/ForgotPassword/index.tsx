@@ -9,6 +9,7 @@ import FormItem from '../../Components/FormItem';
 import Logo from '../../Components/Logo';
 import FooterBox from '../../Components/FooterBox';
 import Container from '../../Components/Container';
+import Link from '../../Components/Link';
 
 import { Form, notification } from 'antd';
 
@@ -20,6 +21,9 @@ import {
 
 // APP CONTEXT
 import { AppContext } from '../../Context';
+
+// APP ROUTE
+import { AppRoute } from '../../Constant';
 
 export interface ResetPassword {
   username: string;
@@ -34,7 +38,7 @@ const ResetPasswordPage: React.FC = () => {
       username: '',
     };
 
-    const errorFieldForForm = [];
+    let errorFieldForForm: { name: string; errors: string[] }[] = [];
 
     if (data.username.trim().length === 0) {
       error.username = 'Username can not be empty';
@@ -60,32 +64,39 @@ const ResetPasswordPage: React.FC = () => {
       });
     }
 
-    if (isValidEmail && data.username !== 'admin@test.com') {
-      error.username = 'We can not find this email';
-
-      errorFieldForForm.push({
-        name: 'username',
-        errors: [`${error.username}`],
-      });
-    }
-
-    if (isValidPhone && data.username !== '132-465-7890') {
-      error.username = 'We can not find this phone';
-
-      errorFieldForForm.push({
-        name: 'username',
-        errors: [`${error.username}`],
-      });
-    }
-
     if (errorFieldForForm.length > 0) {
       return form.setFields(errorFieldForForm);
     }
+
+    errorFieldForForm = [];
 
     appContext?.setLoading(true);
 
     setTimeout(() => {
       appContext?.setLoading(false);
+
+      if (isValidEmail && data.username !== 'admin@test.com') {
+        error.username = 'We can not find this email';
+
+        errorFieldForForm.push({
+          name: 'username',
+          errors: [`${error.username}`],
+        });
+      }
+
+      if (isValidPhone && data.username !== '132-465-7890') {
+        error.username = 'We can not find this phone';
+
+        errorFieldForForm.push({
+          name: 'username',
+          errors: [`${error.username}`],
+        });
+      }
+
+      if (errorFieldForForm.length > 0) {
+        return form.setFields(errorFieldForForm);
+      }
+
       notification.success({
         message: 'Reset password successfully',
         description:
@@ -130,14 +141,18 @@ const ResetPasswordPage: React.FC = () => {
               <Input placeholder="Email or Phone *" />
             </FormItem>
             <ForgotPasswordButtonGroupStyle>
-              <Text color="primary">Remember password?</Text>
+              <Link to={AppRoute.Main}>
+                <Text color="primary">Remember password?</Text>
+              </Link>
               <FormItem style={{ marginBottom: 0 }}>
                 <Button htmlType="submit">Reset</Button>
               </FormItem>
             </ForgotPasswordButtonGroupStyle>
           </Form>
 
-          <Text color="primary">Create Account</Text>
+          <Link to={AppRoute.SignUp}>
+            <Text color="primary">Create Account</Text>
+          </Link>
         </Box>
 
         <FooterBox />
