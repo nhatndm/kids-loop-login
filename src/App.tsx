@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { ThemeProvider } from 'styled-components';
+
+// INTERFACE
+import { Theme } from './Theme/interface';
+
+// THEME
+import theme from './Theme';
+
+// APP CONTEXT
+import { AppProvider } from './Context';
+
+// APP STYLE
+import { AppStyle } from './App.style';
+
+interface AppState {
+  theme: Theme;
 }
+
+const App: React.FC = () => {
+  const [appState, setAppState] = useState<AppState>({
+    theme: theme.default,
+  });
+
+  const setTheme = (theme: Theme): void =>
+    setAppState({ ...appState, theme: theme });
+
+  return (
+    <AppProvider value={{ theme: appState.theme, setTheme }}>
+      <ThemeProvider theme={appState.theme}>
+        <AppStyle></AppStyle>
+      </ThemeProvider>
+    </AppProvider>
+  );
+};
 
 export default App;
