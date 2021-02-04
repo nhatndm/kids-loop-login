@@ -1,11 +1,11 @@
-export interface StyleProperty {
-  [attribute: string]: string;
+/* eslint-disable @typescript-eslint/no-empty-interface */
+
+interface BaseStyle<K, T = any> {
+  [key: string]: K | T;
 }
 
-export interface Theme {
-  [attribute: string]: string | StyleProperty;
-}
+export interface StyleProperty extends BaseStyle<string, number> {}
 
-export interface AppTheme {
-  [theme: string]: Theme;
-}
+export interface Theme extends BaseStyle<string, StyleProperty> {}
+
+export interface AppTheme extends BaseStyle<Theme> {}
